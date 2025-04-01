@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Six+Caps&display=swap");
+/* .six-caps-regular {
+  font-family: "Six Caps", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: "Trap";
+  src: url("../assets/fonts/Trap-Bold.otf");
+  src: url("../assets/fonts/Trap-Regular.otf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "MyCustomFont", fallback-font, sans-serif;
+  width: 100vw;
+  overflow-x: hidden !important;
+  background-color: #f5f5f5;
+}
+section {
+  height: 100vh;
+  margin-bottom: 80px !important;
+}
+/* .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+} */
+
+.section-heading {
+  font-family: "Trap";
+  font-weight: bold;
+  font-size: 26px !important;
+  text-transform: uppercase !important;
+  color: #7e7b7b;
+  overflow-wrap: break-word;
+}
+
+.section-heading-active {
+  color: black !important;
+}
