@@ -8,6 +8,7 @@ import "./serviceLocations.css";
 import locationImg1 from "../../assets/images/queens.png";
 import locationImg2 from "../../assets/images/suffolk.png";
 import locationImg3 from "../../assets/images/nassau.png";
+import logoOverlay from "../../assets/images/about-1.jpg"; // For the watermark
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -39,16 +40,16 @@ const ServiceLocations = () => {
       ];
 
       images.forEach((image) => {
-        // Set initial scale to 2 (zoomed in)
+        // Set initial scale to 1.2 (zoomed in)
         gsap.set(image.element, {
-          scale: 1.2,
+          scale: 1.5,
           opacity: 1,
           transformOrigin: "center center",
         });
 
         // Create the scale down animation tied to scroll
         gsap.to(image.element, {
-          scale: 1,
+          scale: 1.2,
           ease: "none",
           scrollTrigger: {
             trigger: image.parentContainer,
@@ -95,60 +96,66 @@ const ServiceLocations = () => {
     <section className="service-locations-section" ref={sectionRef}>
       <Container>
         <Row>
-          <div className="section-heading mb-5 pb-2">
-            OUR expertise -
-            <span className="section-heading-active">
-              At ADHI Construction,
-            </span>{" "}
-            We proudly serve Queens, Nassau County, and Suffolk County, ensuring
-            HIGH QUALITY craftsmanship, timely project execution, and full
-            compliance with local regulations.
-          </div>
+          <Col>
+            <div className="section-heading animate-entry">
+              OUR expertise -
+              <span className="section-heading-active">
+                At ADHI Construction,
+              </span>{" "}
+              We proudly serve Queens, Nassau County, and Suffolk County,
+              ensuring HIGH QUALITY craftsmanship, timely project execution, and
+              full compliance with local regulations.
+            </div>
+          </Col>
         </Row>
 
-        <div className="locations-grid">
-          {/* Queens */}
-          <div className="location-item queens">
-            <div className="location-image-container">
-              <div className="location-image-inner" ref={queensRef}>
-                <img
-                  src={locationImg1}
-                  alt="Queens"
-                  className="location-image"
-                />
+        <Row className="location-cards-container">
+          {/* Left Column */}
+          <Col md={6} className="d-flex flex-column">
+            {/* Queens Card */}
+            <div className="location-card mb-4">
+              <div className="card-image-wrapper">
+                <div className="card-image-inner" ref={queensRef}>
+                  <img src={locationImg1} alt="Queens" className="card-image" />
+                </div>
+                <div className="location-label">QUEENS</div>
               </div>
-              <div className="location-name">QUEENS</div>
             </div>
-          </div>
 
-          {/* Suffolk */}
-          <div className="location-item suffolk">
-            <div className="location-image-container">
-              <div className="location-image-inner" ref={suffolkRef}>
-                <img
-                  src={locationImg2}
-                  alt="Suffolk County"
-                  className="location-image"
-                />
+            {/* Nassau Card */}
+            <div className="location-card">
+              <div className="card-image-wrapper">
+                <div className="card-image-inner" ref={nassauRef}>
+                  <img
+                    src={locationImg3}
+                    alt="Nassau County"
+                    className="card-image"
+                  />
+                </div>
+                <div className="location-label">NASSAU COUNTY</div>
               </div>
-              <div className="location-name">SUFFOLK COUNTY</div>
             </div>
-          </div>
+          </Col>
 
-          {/* Nassau */}
-          <div className="location-item nassau">
-            <div className="location-image-container">
-              <div className="location-image-inner" ref={nassauRef}>
-                <img
-                  src={locationImg3}
-                  alt="Nassau County"
-                  className="location-image"
-                />
+          {/* Right Column - Suffolk */}
+          <Col
+            md={6}
+            className="d-flex align-items-center justify-content-center"
+          >
+            <div className="location-card">
+              <div className="card-image-wrapper">
+                <div className="card-image-inner" ref={suffolkRef}>
+                  <img
+                    src={locationImg2}
+                    alt="Suffolk County"
+                    className="card-image"
+                  />
+                </div>
+                <div className="location-label">SUFFOLK COUNTY</div>
               </div>
-              <div className="location-name">NASSAU COUNTY</div>
             </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </Container>
     </section>
   );

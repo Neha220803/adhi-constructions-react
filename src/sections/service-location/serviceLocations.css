@@ -1,95 +1,84 @@
-/* Grid layout */
-.locations-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto);
-    gap: 20px;
+/* Service Locations Section */
+.service-locations-section {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+}
+
+/* Section heading */
+.section-heading {
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 50px;
+    /* text-align: center; */
+}
+
+.section-heading-active {
+    font-weight: 700;
+}
+
+/* Location cards container */
+.location-cards-container {
     margin-top: 30px;
 }
 
-.location-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 4px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: white;
-}
-
-/* Position items in the grid */
-.location-item.queens {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-}
-
-.location-item.suffolk {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
-    height: 100%;
-}
-
-.location-item.nassau {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-}
-
-/* Image container styles */
-.location-image-container {
+/* Location Card Styling */
+.location-card {
     position: relative;
     width: 100%;
+    max-width: 500px;
+    height: 489px !important;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Card image wrapper */
+.card-image-wrapper {
+    position: relative;
+    /* width: 400px !important; */
     height: 0;
-    padding-bottom: 75%;
-    /* 4:3 aspect ratio */
+    max-width: 500px;
+    height: 489px !important;
+    padding-bottom: 100%;
+    /* Square aspect ratio */
     overflow: hidden;
 }
 
-.location-item.suffolk .location-image-container {
-    padding-bottom: 150%;
-    /* Taller aspect ratio for suffolk */
-}
-
-.location-image-inner {
+.card-image-inner {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    max-width: 600px;
+    height: 489px !important;
+    /* width: 100%; */
     height: 100%;
-    overflow: hidden;
     transform-origin: center center;
     will-change: transform;
 }
 
-.location-image {
+.card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    max-width: 600px;
+    height: 489px !important;
+    transition: transform 0.3s ease;
 }
 
-/* Location name styles */
-.location-name {
+/* Location label */
+.location-label {
     position: absolute;
-    bottom: 0px;
-    /* left: 15px; */
-    text-transform: uppercase !important;
-    z-index: 2;
-    /* Frame 21 */
+    bottom: 0;
+    left: 0;
     width: 100%;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 10px;
-    gap: 10px;
-    /* position: relative; */
-    height: 109px !important;
-    font-family: 'Trap';
-    font-style: normal;
-    font-weight: 700 !important;
-    font-size: 25px !important;
-    line-height: 28px !important;
-    color: white !important;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.86) 0%, rgba(46, 46, 46, 0.6364) 45.5%, rgba(102, 102, 102, 0) 100%);
+    padding: 15px 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 /* Animation helpers */
@@ -98,45 +87,25 @@
     transform: translateY(30px);
 }
 
+/* Right column alignment */
+.col-md-6:nth-child(2) {
+    display: flex;
+    align-items: center;
+}
+
 /* Media Queries */
 @media (max-width: 767px) {
-    .locations-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, auto);
+    .location-card {
+        margin-bottom: 30px;
     }
 
-    .location-item.queens,
-    .location-item.suffolk,
-    .location-item.nassau {
-        grid-column: 1;
+    .section-heading {
+        font-size: 20px;
+        margin-bottom: 30px;
     }
 
-    .location-item.queens {
-        grid-row: 1;
-    }
-
-    .location-item.suffolk {
-        grid-row: 2;
-    }
-
-    .location-item.nassau {
-        grid-row: 3;
-    }
-
-    .location-item.suffolk .location-image-container {
-        padding-bottom: 75%;
-        /* Same aspect ratio on mobile */
-    }
-
-    .locations-title {
-        margin-bottom: 20px;
-    }
-
-    .locations-subtitle {
-        font-size: 14px;
-    }
-
-    .location-name {
+    .location-label {
         font-size: 16px;
+        padding: 10px;
     }
 }
