@@ -23,26 +23,40 @@ const ServiceLocations = () => {
     // Set up animations once components are mounted
     const setupAnimations = () => {
       // Create a batch of scroll triggers for all images
-      const images = [queensRef.current, suffolkRef.current, nassauRef.current];
+      const images = [
+        {
+          element: queensRef.current,
+          parentContainer: queensRef.current.parentNode,
+        },
+        {
+          element: suffolkRef.current,
+          parentContainer: suffolkRef.current.parentNode,
+        },
+        {
+          element: nassauRef.current,
+          parentContainer: nassauRef.current.parentNode,
+        },
+      ];
 
       images.forEach((image) => {
-        // Initial zoom out animation when scrolling into view
-        gsap.fromTo(
-          image,
-          { scale: 1.2, opacity: 0.8 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 1.5,
-            scrollTrigger: {
-              trigger: image,
-              start: "top bottom",
-              end: "center center",
-              scrub: true,
-            },
-            ease: "power2.out",
-          }
-        );
+        // Set initial scale to 2 (zoomed in)
+        gsap.set(image.element, {
+          scale: 1.2,
+          opacity: 1,
+          transformOrigin: "center center",
+        });
+
+        // Create the scale down animation tied to scroll
+        gsap.to(image.element, {
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: image.parentContainer,
+            start: "top bottom", // starts when top of element reaches bottom of viewport
+            end: "center center", // ends when center of element reaches center of viewport
+            scrub: 0.5, // smoother scrubbing effect
+          },
+        });
       });
 
       // Entry animation for text elements
