@@ -1,0 +1,25 @@
+/* App.css or styles.css */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.content-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Fix for GSAP pin-spacer elements */
+.pin-spacer {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+/* Ensure consistent handling of z-index */
+.header-container,
+section {
+    will-change: transform;
+}

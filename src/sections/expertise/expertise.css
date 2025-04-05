@@ -1,0 +1,122 @@
+/* expertise.css */
+.expertise-section {
+    padding: 60px 0;
+    background-color: #f5f5f5;
+}
+
+/* Card Container */
+.expertise-card-container {
+    perspective: 1000px;
+    height: 300px;
+}
+
+/* Card Styling */
+.expertise-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+}
+
+.expertise-card-front,
+.expertise-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #eee;
+}
+
+.expertise-card-inner {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Front Card Layout */
+.expertise-image-container {
+    height: 210px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expertise-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.expertise-title-container {
+    padding: 20px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+
+.expertise-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    color: #333;
+}
+
+/* Back Card Layout */
+.expertise-card-back {
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.expertise-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    padding: 20px;
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+    .expertise-card-container {
+        height: 260px;
+        margin-bottom: 20px;
+    }
+
+    .expertise-image-container {
+        height: 180px;
+    }
+
+    .expertise-title {
+        font-size: 16px;
+    }
+
+    .expertise-description {
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .section-heading {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .expertise-card-container {
+        height: 280px;
+    }
+
+    .expertise-image-container {
+        height: 190px;
+    }
+}

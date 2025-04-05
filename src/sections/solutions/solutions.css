@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .intro-text {
   margin-bottom: 20px;
   font-size: 18px !important;
@@ -47,6 +48,7 @@
     height: auto;
     min-height: 100vh;
   }
+
   .section-heading {
     font-size: 18px !important;
   }
@@ -79,6 +81,7 @@
   .solution-container {
     gap: 2rem;
   }
+
   #sol-img3 {
     width: 100% !important;
     height: 300px !important;

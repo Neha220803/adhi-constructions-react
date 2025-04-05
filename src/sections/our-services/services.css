@@ -1,0 +1,125 @@
+/* Services */
+
+.carousel-container {
+    width: 100% !important;
+    /* max-width: 960px; */
+    /* margin: 2rem auto; */
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: 300px;
+}
+
+.carousel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.carousel__slider {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel__wrapper {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 200%;
+    /* Double width to hold both slides */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+.carousel__item {
+    flex: 0 0 50%;
+    /* Each slide takes up half of the wrapper width */
+    height: 100%;
+    /* padding: 15px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    /* Changed text color to dark since backgrounds are removed */
+    text-align: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background-color: #fff;
+    /* White background instead of colored */
+}
+
+.carousel__item .container {
+    width: 100%;
+}
+
+.content-col {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.main-slide-col-1,
+.right-slide-col-1 {
+    background-color: transparent;
+    padding: 10px;
+}
+
+.main-slide-col-2,
+.right-slide-col-2 {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: transparent;
+    /* Removed the semi-transparent background */
+}
+
+.nav-arrow-in-col {
+    transition: transform 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-arrow-in-col:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.service-main-title {
+    color: #000;
+    font-family: Trap !important;
+    font-size: 32px;
+    padding: 0px 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 80% !important;
+}
+
+.service-list {
+    gap: 16px !important;
+    color: #000;
+    font-family: Trap;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.service-list li {
+    margin-bottom: 10px;
+    /* Adjust this value to control the gap size */
+}
+
+/* Remove margin from the last item if needed */
+.service-list li:last-child {
+    margin-bottom: 0;
+}

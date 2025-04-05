@@ -1,0 +1,82 @@
+.contact-us-bg {
+    background-image: url('../../assets/images/contactUs.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-form {
+    border-radius: 30px !important;
+    padding: 60px !important;
+    background-color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 500px !important;
+
+}
+
+.contact-form-header {
+    width: 404px;
+    height: 60.26px;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 35px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.btn-contact {
+    background: black !important;
+    border-radius: 15px !important;
+    width: 400px;
+    height: 50px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: white;
+    border: none !important;
+}
+
+.contact-form input {
+    width: 400px !important;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.contact-form input:focus {
+    border-color: #000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.contact-heading {
+    font-family: 'Trap' !important;
+    font-style: normal !important;
+    font-weight: 800 !important;
+    font-size: 63.88px !important;
+    line-height: 70px !important;
+    text-transform: uppercase !important;
+    color: #FFFFFF;
+}
+
+.contact-description {
+    font-family: 'Trap' !important;
+    font-style: normal !important;
+    text-align: start !important;
+    font-weight: 700 !important;
+    font-size: 20px !important;
+    line-height: 22px !important;
+    text-align: center;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}

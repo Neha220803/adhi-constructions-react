@@ -1,0 +1,75 @@
+footer {
+    height: 75vh;
+    width: 100vw;
+    background-color: #222;
+    overflow: hidden;
+}
+
+.footer-container {
+    /* Removed the "section" prefix */
+    height: 75vh;
+    color: #f0f0f0;
+    background-color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-row {
+    height: 33.3%;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-row.center {
+    background-color: #262626;
+    justify-content: space-around;
+}
+
+.logo {
+    width: 400px;
+    height: 80px;
+    background-color: #ffb8b8;
+    border-radius: 3px;
+}
+
+.items {
+    width: 50vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.item {
+    width: 80px;
+    height: 80px;
+    background-color: #cee7ff;
+    border-radius: 3px;
+}
+
+.circles {
+    width: 50vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    background-color: #a5dda5;
+    border-radius: 50%;
+}
+
+.foot {
+    height: 20px;
+    width: 80vw;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+}

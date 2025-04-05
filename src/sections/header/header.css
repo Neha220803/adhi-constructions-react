@@ -1,9 +1,11 @@
+/* header.css */
 .header-container {
   height: 100vh;
   width: 100%;
   position: relative;
-  margin-bottom: 80px !important;
   overflow: hidden;
+  z-index: 1;
+  /* Remove margin-bottom as ScrollTrigger will handle the spacing */
 }
 
 header {
@@ -21,33 +23,11 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  /* background-image: url("./assets/images/header-img.png"); */
+  background-image: url("../../assets/images/header-img.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   z-index: -1;
-}
-
-.header-content {
-  color: white;
-  font-size: 150px;
-  font-family: "Six Caps", sans-serif !important;
-  font-weight: 400;
-  font-style: normal;
-  z-index: 2;
-  position: relative;
-  text-align: center;
-}
-
-@media screen and (max-width: 767px) {
-  .header-bg {
-    /* background-image: url("../assets/images/header-mobile-img.png"); */
-  }
-
-  .header-content {
-    font-size: 80px !important;
-    padding: 20px !important;
-  }
 }
 
 .header-content {
@@ -59,4 +39,32 @@ header {
   z-index: 2;
   position: relative;
   text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .header-bg {
+    background-image: url("../../assets/images/header-mobile-img.png");
+  }
+
+  .header-content {
+    font-size: 80px !important;
+    padding: 20px !important;
+  }
+}
+
+/* Remove the ::after pseudo-element as it's causing issues */
+
+/* Improve handling of GSAP-created elements */
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end,
+.gsap-marker-start,
+.gsap-marker-end {
+  z-index: 1000;
+}
+
+/* Ensure the next section starts cleanly */
+section {
+  position: relative;
+  z-index: 2;
+  /* Higher than header after scrolling */
 }
