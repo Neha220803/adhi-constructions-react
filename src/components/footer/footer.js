@@ -43,8 +43,10 @@ const Footer = () => {
         <div className="footer-row center">
           <div className="items">
             <div className="item"></div>
-            <div className="item"></div>
-            <div className="item"></div>
+            <div className="item">Home</div>
+            <div className="item">About Us</div>
+            <div className="item">Services</div>
+            <div className="item">Projects</div>
           </div>
 
           <div className="circles">
@@ -53,7 +55,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-row">
-          <div className="foot"></div>
+          <div className="foot">Adhi Constructions</div>
         </div>
       </div>
     </footer>
