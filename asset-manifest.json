@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/adhi-constructions-react/static/css/main.afa2cd20.css",
-    "main.js": "/adhi-constructions-react/static/js/main.f8b3cd1b.js",
+    "main.css": "/adhi-constructions-react/static/css/main.ff5f0ced.css",
+    "main.js": "/adhi-constructions-react/static/js/main.432755bc.js",
     "static/media/header-img.png": "/adhi-constructions-react/static/media/header-img.885d14462ca97f275f13.png",
     "static/media/contactUs.png": "/adhi-constructions-react/static/media/contactUs.a285045c24528cca5d93.png",
     "static/media/solu-2.jpg": "/adhi-constructions-react/static/media/solu-2.af1b0b7a66d1621b0120.jpg",
@@ -25,11 +25,11 @@
     "static/media/Trap-Bold.otf": "/adhi-constructions-react/static/media/Trap-Bold.9ccc120585004b89ecfd.otf",
     "static/media/Trap-Regular.otf": "/adhi-constructions-react/static/media/Trap-Regular.a4b62dc9e1a632cbbd62.otf",
     "index.html": "/adhi-constructions-react/index.html",
-    "main.afa2cd20.css.map": "/adhi-constructions-react/static/css/main.afa2cd20.css.map",
-    "main.f8b3cd1b.js.map": "/adhi-constructions-react/static/js/main.f8b3cd1b.js.map"
+    "main.ff5f0ced.css.map": "/adhi-constructions-react/static/css/main.ff5f0ced.css.map",
+    "main.432755bc.js.map": "/adhi-constructions-react/static/js/main.432755bc.js.map"
   },
   "entrypoints": [
-    "static/css/main.afa2cd20.css",
-    "static/js/main.f8b3cd1b.js"
+    "static/css/main.ff5f0ced.css",
+    "static/js/main.432755bc.js"
   ]
 }
