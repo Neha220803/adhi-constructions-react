@@ -10,6 +10,7 @@ import ExpertiseSection from "../sections/expertise/expertise";
 import Footer from "../components/footer/footer";
 import ServiceLocations from "../sections/service-location/serviceLocations";
 import ContactUsComp from "../sections/contact-us/contactUs";
+import AnimatedNav from "../components/nav/nav";
 
 const HomePage = () => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const HomePage = () => {
 
   return (
     <>
+      <AnimatedNav />
       <HeaderComp />
       <div className="content-container">
         <SolutionsSection />

@@ -32,7 +32,7 @@ const SolutionsSection = () => {
   return (
     <section ref={sectionRef} className="min-vh-100">
       <Container className="px-0 h-100">
-        <Row className="g-0 h-100 solution-container">
+        <Row className="g-0 h-100 solution-container mt-5">
           <Col lg={7} md={7} xs={12} className="">
             <div className="p-4 pb-0 p-md-5 content-wrapper">
               <div>
