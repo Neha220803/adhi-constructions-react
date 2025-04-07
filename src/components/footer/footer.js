@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LuConstruction } from "react-icons/lu";
 import "./footer.css";
 
 // Register GSAP plugins
@@ -35,14 +36,16 @@ const Footer = () => {
 
   return (
     <footer className="footer" ref={footerRef}>
-      <div className="footer-container" ref={footerContainerRef}>
-        <div className="footer-row">
-          <div className="logo"></div>
+      <div className="footer-container " ref={footerContainerRef}>
+        <div className="footer-row container">
+          <div className="logo">
+            Let's Build Together! <br></br> Contact us today to discuss your
+            construction needs.
+          </div>
         </div>
 
         <div className="footer-row center">
-          <div className="items">
-            <div className="item"></div>
+          <div className="items container">
             <div className="item">Home</div>
             <div className="item">About Us</div>
             <div className="item">Services</div>
@@ -50,11 +53,11 @@ const Footer = () => {
           </div>
 
           <div className="circles">
-            <div className="circle"></div>
+            <LuConstruction className="footer-icon" />
           </div>
         </div>
 
-        <div className="footer-row">
+        <div className="footer-row container">
           <div className="foot">Adhi Constructions</div>
         </div>
       </div>

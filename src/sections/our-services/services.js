@@ -1,7 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import {
+  BsChevronRight,
+  BsChevronLeft,
+  BsChevronDown,
+  BsChevronUp,
+} from "react-icons/bs";
 import { gsap } from "gsap";
+import { createHeadingAnimation } from "../../animations/pageAnimations";
 import "./services.css";
 
 // Import images
@@ -11,6 +17,10 @@ import serviceImg3 from "../../assets/images/service-3.png";
 import serviceImg4 from "../../assets/images/service-4.png";
 
 const ServicesSection = () => {
+  const headingRef = useRef(null);
+  const [expandedServices, setExpandedServices] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
+
   // Service data array
   const services = [
     {
@@ -59,53 +69,115 @@ const ServicesSection = () => {
 
   // Create refs for each card without causing re-renders
   const wrapperRefs = useRef({});
+  const detailRefs = useRef({});
 
-  // Function to show details for a specific service
+  // Function to toggle details on mobile
+  const toggleMobileDetails = (id) => {
+    setExpandedServices((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  // Effect for mobile detection and heading animation
+  useEffect(() => {
+    // Animate heading
+    const headingTrigger = createHeadingAnimation(headingRef, {
+      animationDirection: "y",
+      animationDistance: 30,
+      staggerTime: 0.08,
+    });
+
+    // Check if mobile and update state
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener("resize", checkMobile);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      if (headingTrigger) headingTrigger.kill();
+    };
+  }, []);
+
+  // Effect for mobile animations
+  useEffect(() => {
+    // Handle animations for expanded mobile sections
+    Object.keys(expandedServices).forEach((id) => {
+      const detailElement = detailRefs.current[id];
+      if (detailElement) {
+        if (expandedServices[id]) {
+          // Show details
+          gsap.fromTo(
+            detailElement,
+            { height: 0, opacity: 0 },
+            { height: "auto", opacity: 1, duration: 0.4, ease: "none" }
+          );
+        } else {
+          // Hide details
+          gsap.to(detailElement, {
+            height: 0,
+            opacity: 0,
+            duration: 0.3,
+            ease: "none",
+          });
+        }
+      }
+    });
+  }, [expandedServices]);
+
+  // Function to show details for a specific service (original desktop behavior)
   const showDetails = (index) => {
     const wrapper = wrapperRefs.current[index];
     if (wrapper) {
       gsap.to(wrapper, {
-        duration: 0.6,
+        duration: 0.5,
         x: "-50%",
-        ease: "power2.out",
+        ease: "none", // Changed easing for smoother, more consistent animation
         force3D: true,
       });
     }
   };
 
-  // Function to hide details for a specific service
+  // Function to hide details for a specific service (original desktop behavior)
   const hideDetails = (index) => {
     const wrapper = wrapperRefs.current[index];
     if (wrapper) {
       gsap.to(wrapper, {
-        duration: 0.6,
+        duration: 0.5,
         x: "0%",
-        ease: "power2.out",
+        ease: "none", // Changed easing for smoother, more consistent animation
         force3D: true,
       });
     }
   };
 
   return (
-    <section>
+    <section className="services-section py-5">
       <Container>
         <Row>
-          <div className="section-heading mb-5 pb-2">
-            OUR SERVICES -
+          <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
+            OUR SERVICES <span className="heading-dash"></span>{" "}
             <span className="section-heading-active">
-              WE PROVIDE TOP NOTCH SERVICES
+              WE PROVIDE TOP NOTCH SERVICES{" "}
             </span>
             At ADHI Construction, we provide a full range of construction
             solutions to meet the needs of residential, commercial, AND
-            industrial industrial projects. Our services include:
+            industrial industrial projects. Our services include
           </div>
         </Row>
 
-        {/* Services stacked vertically */}
         {services.map((service, index) => (
           <Row className="service-item-container mb-5" key={service.id}>
             <Col xs={12}>
-              <div className="carousel-container">
+              {/* Desktop View */}
+              <div className="carousel-container d-none d-md-block">
                 <div className="carousel js-carousel">
                   <div className="carousel__slider">
                     <div
@@ -121,7 +193,7 @@ const ServicesSection = () => {
                       >
                         <Container>
                           <Row>
-                            <Col xs={5} className="">
+                            <Col xs={12} md={4} className="">
                               <div className="content-col main-slide-col-1 d-flex align-items-center justify-content-center">
                                 <img
                                   src={service.image}
@@ -130,15 +202,20 @@ const ServicesSection = () => {
                                 />
                               </div>
                             </Col>
-                            <Col xs={6}>
-                              <div className="content-col main-slide-col-2 text-start">
-                                <div className="service-main-title ">
+                            <Col
+                              xs={10}
+                              md={6}
+                              className="d-flex align-items-center justify-content-start"
+                            >
+                              <div className="content-col main-slide-col-2 d-flex align-items-center text-start">
+                                <div className="service-main-title align-items-center">
                                   {service.title}
                                 </div>
                               </div>
                             </Col>
                             <Col
-                              xs={1}
+                              xs={2}
+                              md={2}
                               className="d-flex align-items-center justify-content-center"
                             >
                               <Button
@@ -160,7 +237,7 @@ const ServicesSection = () => {
                       >
                         <Container>
                           <Row>
-                            <Col xs={5}>
+                            <Col xs={12} md={4}>
                               <div className="content-col right-slide-col-1 d-flex align-items-center justify-content-center">
                                 <img
                                   src={service.image}
@@ -169,7 +246,7 @@ const ServicesSection = () => {
                                 />
                               </div>
                             </Col>
-                            <Col xs={6}>
+                            <Col xs={11} md={6}>
                               <div className="content-col right-slide-col-2 text-start">
                                 <ul className="service-list">
                                   {service.details.map((detail, i) => (
@@ -180,6 +257,7 @@ const ServicesSection = () => {
                             </Col>
                             <Col
                               xs={1}
+                              md={2}
                               className="d-flex align-items-center justify-content-center"
                             >
                               <Button
@@ -194,6 +272,58 @@ const ServicesSection = () => {
                         </Container>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile View */}
+              <div className="d-md-none">
+                <div className="service-card-mobile">
+                  <div className="service-card-header">
+                    <Row className="bg-dar">
+                      <Col xs={12}>
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="img-fluid rounded-3 service-img-mobile"
+                        />
+                      </Col>
+                      <Col xs={10} className="bg-primar mt-3">
+                        <h3 className="service-title-mobile">
+                          {service.title}
+                        </h3>
+                      </Col>
+                      <Col
+                        xs={2}
+                        className="d-flex align-items-center justify-content-center"
+                      >
+                        <Button
+                          variant="white"
+                          className="nav-arrow-mobile rounded-circle"
+                          onClick={() => toggleMobileDetails(service.id)}
+                        >
+                          {expandedServices[service.id] ? (
+                            <BsChevronUp size={16} color="#6c757d" />
+                          ) : (
+                            <BsChevronDown size={16} color="#6c757d" />
+                          )}
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
+
+                  <div
+                    className="service-details-mobile overflow-hidden"
+                    ref={(el) => {
+                      detailRefs.current[service.id] = el;
+                    }}
+                    style={{ height: 0, opacity: 0 }}
+                  >
+                    <ul className="service-list-mobile">
+                      {service.details.map((detail, i) => (
+                        <li key={i}>{detail}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>

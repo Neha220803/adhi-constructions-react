@@ -1,67 +1,48 @@
 import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { createAboutUsAnimation } from "../../animations/pageAnimations";
 import "./AboutUs.css";
 
 // Import images
 import aboutImg1 from "../../assets/images/about-1.jpg";
 import aboutImg2 from "../../assets/images/about-2.jpg";
+import { FaArrowRight } from "react-icons/fa";
 
 const AboutUsSection = () => {
+  const headingRef = useRef(null);
   const bottomContainerRef = useRef(null);
 
   useEffect(() => {
-    // Set initial state for the container
-    gsap.set(bottomContainerRef.current, {
-      x: -100,
-      opacity: 0,
-    });
-
-    // Create the animation with scroll trigger
-    const animation = gsap.to(bottomContainerRef.current, {
-      duration: 1.2,
-      x: 0,
-      opacity: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: bottomContainerRef.current,
-        start: "top bottom-=50",
-        end: "bottom center",
-        toggleActions: "play none none reverse",
-        once: false,
-        markers: false,
-      },
-    });
+    // Initialize animation from the separate file
+    const cleanup = createAboutUsAnimation(headingRef, bottomContainerRef);
 
     // Cleanup on component unmount
-    return () => {
-      if (animation.scrollTrigger) {
-        animation.scrollTrigger.kill();
-      }
-      animation.kill();
-    };
+    return cleanup;
   }, []);
 
   return (
     <section className="bg-primar">
       <div className="container">
         <div className="row">
-          <div className="section-heading mb-5 pb-2">
-            WHO WE ARE -
+          <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
+            <span>WHO WE ARE</span>
+            <span className="heading-dash"></span>{" "}
             <span className="section-heading-active">
-              Founded with a commitment
-            </span>
-            TO excellence, ADHI Construction brings a WEALTH OF
-            <span className="section-heading-active">
-              experienceD and a dedicated team
-            </span>
-            of PROFESSIONALS TO EVERY project. Our expertise SPANS
-            <span className="section-heading-active">
-              COMMERCIAL, residential, healthcare, institutional, and retail
-            </span>
-            sectors, ensuring that we meet the UNIQUE
+              FOUNDED WITH A COMMITMENT
+            </span>{" "}
+            TO EXCELLENCE, ADHI CONSTRUCTION BRINGS A WEALTH OF
             <span className="section-heading-active">
               {" "}
-              NEEDS OF each client.
+              EXPERIENCED AND A DEDICATED TEAM{" "}
+            </span>
+            OF PROFESSIONALS TO EVERY PROJECT. OUR EXPERTISE SPANS
+            <span className="section-heading-active">
+              {" "}
+              COMMERCIAL, RESIDENTIAL, HEALTHCARE, INSTITUTIONAL, AND RETAIL{" "}
+            </span>
+            SECTORS, ENSURING THAT WE MEET THE UNIQUE
+            <span className="section-heading-active">
+              {" "}
+              NEEDS OF EACH CLIENT.
             </span>
           </div>
         </div>
@@ -69,7 +50,7 @@ const AboutUsSection = () => {
       <div className="row who-are-we-bottom-container" ref={bottomContainerRef}>
         <div className="col-md-3 col-12 d-flex justify-content-md-end align-items-end">
           <button className="common-button d-flex px-2">
-            <i className="fa fa-arrow-right"></i>
+            <FaArrowRight />
             <div>Learn more</div>
           </button>
         </div>

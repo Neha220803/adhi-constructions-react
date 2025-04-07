@@ -4,14 +4,11 @@
     text-transform: uppercase;
     border: 1px black solid;
     background-color: white;
+    color: black !important;
     border-radius: 5px;
     justify-content: space-evenly;
     justify-items: center;
     align-items: center;
-}
-
-.who-are-we-bottom-container {
-    /* Initial state will be set by GSAP */
 }
 
 .about-img {

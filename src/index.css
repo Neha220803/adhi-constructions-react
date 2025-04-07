@@ -20,7 +20,7 @@
 }
 
 body {
-  font-family: "MyCustomFont", fallback-font, sans-serif;
+  font-family: "Trap", fallback-font, sans-serif;
   width: 100vw;
   overflow-x: hidden !important;
   background-color: #f5f5f5;
@@ -36,7 +36,6 @@ section {
   margin: 0 auto;
   padding: 2rem;
 } */
-
 .section-heading {
   font-family: "Trap";
   font-weight: bold;
@@ -44,8 +43,40 @@ section {
   text-transform: uppercase !important;
   color: #7e7b7b;
   overflow-wrap: break-word;
+  margin-bottom: 10px !important;
+  display: contents !important;
 }
 
 .section-heading-active {
   color: black !important;
+  display: contents !important;
+}
+
+.heading-dash {
+  display: inline-block !important;
+  width: 200px !important;
+  /* Reduced width to fit inline */
+  height: 2px !important;
+  background-color: #000 !important;
+  margin: 0 10px !important;
+  vertical-align: middle;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .heading-dash {
+    width: 100px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .heading-dash {
+    width: 150px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .heading-dash {
+    width: 288px !important;
+  }
 }

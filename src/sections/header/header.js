@@ -1,52 +1,18 @@
 // components/header/header.js
 import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createHeaderAnimation } from "../../animations/pageAnimations";
 import "./header.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const HeaderComp = () => {
   const headerRef = useRef(null);
   const headerBgRef = useRef(null);
 
   useEffect(() => {
-    // GSAP animations
-    const headerTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: headerRef.current,
-        start: "top top",
-        end: "+=100%",
-        pin: true,
-        scrub: true,
-        pinSpacing: true,
-        markers: false,
-        anticipatePin: 1, // Helps prevent layout shifts
-        onLeave: (self) => {
-          // Fix for possible stacking context issues
-          gsap.set(headerRef.current, { zIndex: 0 });
-        },
-        onEnterBack: (self) => {
-          // Reset z-index when re-entering
-          gsap.set(headerRef.current, { zIndex: 1 });
-        },
-      },
-    });
+    // Initialize the animation from the separate file
+    const { cleanup } = createHeaderAnimation(headerRef, headerBgRef);
 
-    // Animate the background
-    headerTimeline.to(headerBgRef.current, {
-      scale: 1.5,
-      duration: 1,
-      ease: "none",
-    });
-
-    // Set up proper cleanup
-    return () => {
-      if (headerTimeline.scrollTrigger) {
-        headerTimeline.scrollTrigger.kill();
-      }
-      headerTimeline.kill();
-    };
+    // Return cleanup function
+    return cleanup;
   }, []);
 
   return (

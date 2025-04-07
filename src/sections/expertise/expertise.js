@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createHeadingAnimation } from "../../animations/pageAnimations";
 import "./expertise.css";
 
 // Import images
@@ -11,45 +13,104 @@ import plumbingImg from "../../assets/images/exp-4.png";
 import projManage from "../../assets/images/exp-5.png";
 import coclearanceImg from "../../assets/images/exp-6.png";
 
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
 const ExpertiseSection = () => {
   // Create refs for each card
   const cardsRef = useRef([]);
+  const headingRef = useRef(null);
+  const cardRowRef = useRef(null);
 
   useEffect(() => {
+    // Animate heading using our reusable function
+    const headingTrigger = createHeadingAnimation(headingRef, {
+      animationDirection: "y",
+      animationDistance: 30,
+      staggerTime: 0.08,
+      ease: "power2.out",
+    });
+
     // Set up GSAP for cards
-    gsap.set(".expertise-card", { transformStyle: "preserve-3d" });
+    gsap.set(".expertise-card", {
+      transformStyle: "preserve-3d",
+      opacity: 0,
+      y: 50,
+    });
+
     gsap.set(".expertise-card-back", {
       rotationY: 180,
       backfaceVisibility: "hidden",
     });
-    gsap.set(".expertise-card-front", { backfaceVisibility: "hidden" });
 
-    // Create timelines for each card
-    const timelines = [];
+    gsap.set(".expertise-card-front", {
+      backfaceVisibility: "hidden",
+    });
+
+    // Create entrance animation for cards
+    const cardsTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: cardRowRef.current,
+        start: "top 80%",
+        once: true,
+      },
+    });
+
+    // Animate each card in staggered
+    cardsTimeline.to(".expertise-card", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power2.out",
+    });
+
+    // Create flip timelines for each card
+    const flipTimelines = [];
 
     // Set up animations
     cardsRef.current.forEach((card, index) => {
       if (card) {
         const tl = gsap.timeline({ paused: true });
         tl.to(card, { duration: 0.6, rotationY: 180, ease: "power2.inOut" });
-        timelines.push(tl);
+        flipTimelines.push(tl);
 
         // Add event listeners
         card.addEventListener("mouseenter", () => tl.play());
         card.addEventListener("mouseleave", () => tl.reverse());
+
+        // Fix for iOS / touch devices
+        card.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          if (tl.progress() === 0) {
+            tl.play();
+          } else {
+            tl.reverse();
+          }
+        });
       }
     });
 
     // Cleanup
     return () => {
-      timelines.forEach((tl) => tl.kill());
+      if (headingTrigger) headingTrigger.kill();
+      cardsTimeline.scrollTrigger && cardsTimeline.scrollTrigger.kill();
+      cardsTimeline.kill();
+
+      flipTimelines.forEach((tl) => tl.kill());
       cardsRef.current.forEach((card) => {
         if (card) {
           card.removeEventListener("mouseenter", () => {});
           card.removeEventListener("mouseleave", () => {});
+          card.removeEventListener("touchstart", () => {});
         }
       });
     };
+  }, []);
+
+  // Reset refs array when component re-renders
+  useEffect(() => {
+    cardsRef.current = [];
   }, []);
 
   // Add to refs array
@@ -101,30 +162,36 @@ const ExpertiseSection = () => {
       title: "CO CLEARENCE ASSISTANCE",
       image: coclearanceImg,
       description:
-        " We ensure a smooth process for obtaining a Certificate of Occupancy (CO) clearance, which is essential for legally occupying a building. Our team meticulously follows building codes and safety regulations, ensuring all inspections and approvals are met without delays.",
+        "We ensure a smooth process for obtaining a Certificate of Occupancy (CO) clearance, which is essential for legally occupying a building. Our team meticulously follows building codes and safety regulations, ensuring all inspections and approvals are met without delays.",
     },
   ];
 
   return (
     <section className="expertise-section py-5">
       <Container>
-        <Row>
-          <div className="section-heading mb-5 pb-2">
-            OUR expertise -
+        <Row className="mb-5 px-3 px-md-0">
+          <div className="section-heading mb-5 pb-2 " ref={headingRef}>
+            OUR expertise <span className="heading-dash"></span>{" "}
             <span className="section-heading-active">
               At ADHI Construction,
             </span>{" "}
             we take pride in delivering high quality construction services
-            backed by a team of certified professionals. From design to
-            execution, we ensure that every Project meets design standards,
-            safety regulations and compliance requirements including certificate
-            of occupancy (CO) clearance for a seamless hassle free experience.
+            backed by a team of{" "}
+            <span className="section-heading-active">
+              certified professionals
+            </span>
+            . From design to execution, we ensure that every Project meets{" "}
+            <span className="section-heading-active">
+              design standards, safety regulations
+            </span>{" "}
+            and compliance requirements including certificate of occupancy (CO)
+            clearance for a seamless hassle free experience.
           </div>
         </Row>
 
-        <Row className="gy-4">
+        <Row className="gy-4" ref={cardRowRef}>
           {services.map((service, index) => (
-            <Col md={6} key={service.id}>
+            <Col md={6} lg={4} key={service.id} className="mb-4">
               <div className="expertise-card-container">
                 <div className="expertise-card" ref={addToRefs}>
                   {/* Front of card */}

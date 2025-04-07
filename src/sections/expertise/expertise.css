@@ -8,6 +8,9 @@
 .expertise-card-container {
     perspective: 1000px;
     height: 300px;
+    margin-bottom: 20px;
+    display: block;
+    width: 100%;
 }
 
 /* Card Styling */
@@ -25,6 +28,8 @@
 .expertise-card-front,
 .expertise-card-back {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
@@ -48,6 +53,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #f9f9f9;
 }
 
 .expertise-image {
@@ -86,6 +92,17 @@
     padding: 20px;
 }
 
+/* Fix for Safari */
+.expertise-card,
+.expertise-card-front,
+.expertise-card-back {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
 /* Media Queries */
 @media (max-width: 767px) {
     .expertise-card-container {
@@ -118,5 +135,27 @@
 
     .expertise-image-container {
         height: 190px;
+    }
+}
+
+/* Touch device support */
+@media (hover: none) {
+    .expertise-card:hover {
+        transform: none;
+    }
+
+    /* Add tap indicator */
+    .expertise-card::after {
+        /* content: "Tap to flip"; */
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        font-size: 12px;
+        padding: 3px 8px;
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        opacity: 0.8;
+        z-index: 10;
     }
 }

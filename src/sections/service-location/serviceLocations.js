@@ -93,27 +93,24 @@ const ServiceLocations = () => {
   }, []);
 
   return (
-    <section className="service-locations-section" ref={sectionRef}>
+    <section className="" ref={sectionRef}>
       <Container>
-        <Row>
-          <Col>
-            <div className="section-heading animate-entry">
-              OUR expertise -
-              <span className="section-heading-active">
-                At ADHI Construction,
-              </span>{" "}
-              We proudly serve Queens, Nassau County, and Suffolk County,
-              ensuring HIGH QUALITY craftsmanship, timely project execution, and
-              full compliance with local regulations.
-            </div>
-          </Col>
+        <Row className="mb-5 px-3 px-md-0">
+          <div className="section-heading ">
+            OUR locations -{" "}
+            <span className="section-heading-active">We proudly serve</span>{" "}
+            Queens, Nassau County, and Suffolk County, ensuring
+            <span className="section-heading-active"> HIGH QUALITY</span>{" "}
+            craftsmanship, timely project execution, and full compliance with
+            local regulations.
+          </div>
         </Row>
 
         <Row className="location-cards-container">
           {/* Left Column */}
           <Col md={6} className="d-flex flex-column">
             {/* Queens Card */}
-            <div className="location-card mb-4">
+            <div className="location-card mb-md-5">
               <div className="card-image-wrapper">
                 <div className="card-image-inner" ref={queensRef}>
                   <img src={locationImg1} alt="Queens" className="card-image" />
@@ -123,7 +120,7 @@ const ServiceLocations = () => {
             </div>
 
             {/* Nassau Card */}
-            <div className="location-card">
+            <div className="location-card mt-md-5">
               <div className="card-image-wrapper">
                 <div className="card-image-inner" ref={nassauRef}>
                   <img
