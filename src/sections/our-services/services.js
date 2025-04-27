@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import {
-  BsChevronRight,
-  BsChevronLeft,
-  BsChevronDown,
-  BsChevronUp,
-} from "react-icons/bs";
+import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import { gsap } from "gsap";
 import { createHeadingAnimation } from "../../animations/pageAnimations";
 import "./services.css";
@@ -18,7 +13,6 @@ import serviceImg4 from "../../assets/images/service-4.png";
 
 const ServicesSection = () => {
   const headingRef = useRef(null);
-  const [expandedServices, setExpandedServices] = useState({});
   const [isMobile, setIsMobile] = useState(false);
 
   // Service data array
@@ -69,15 +63,6 @@ const ServicesSection = () => {
 
   // Create refs for each card without causing re-renders
   const wrapperRefs = useRef({});
-  const detailRefs = useRef({});
-
-  // Function to toggle details on mobile
-  const toggleMobileDetails = (id) => {
-    setExpandedServices((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
 
   // Effect for mobile detection and heading animation
   useEffect(() => {
@@ -106,53 +91,27 @@ const ServicesSection = () => {
     };
   }, []);
 
-  // Effect for mobile animations
-  useEffect(() => {
-    // Handle animations for expanded mobile sections
-    Object.keys(expandedServices).forEach((id) => {
-      const detailElement = detailRefs.current[id];
-      if (detailElement) {
-        if (expandedServices[id]) {
-          // Show details
-          gsap.fromTo(
-            detailElement,
-            { height: 0, opacity: 0 },
-            { height: "auto", opacity: 1, duration: 0.4, ease: "none" }
-          );
-        } else {
-          // Hide details
-          gsap.to(detailElement, {
-            height: 0,
-            opacity: 0,
-            duration: 0.3,
-            ease: "none",
-          });
-        }
-      }
-    });
-  }, [expandedServices]);
-
-  // Function to show details for a specific service (original desktop behavior)
+  // Function to show details for a specific service (desktop behavior)
   const showDetails = (index) => {
     const wrapper = wrapperRefs.current[index];
     if (wrapper) {
       gsap.to(wrapper, {
         duration: 0.5,
         x: "-50%",
-        ease: "none", // Changed easing for smoother, more consistent animation
+        ease: "none",
         force3D: true,
       });
     }
   };
 
-  // Function to hide details for a specific service (original desktop behavior)
+  // Function to hide details for a specific service (desktop behavior)
   const hideDetails = (index) => {
     const wrapper = wrapperRefs.current[index];
     if (wrapper) {
       gsap.to(wrapper, {
         duration: 0.5,
         x: "0%",
-        ease: "none", // Changed easing for smoother, more consistent animation
+        ease: "none",
         force3D: true,
       });
     }
@@ -277,11 +236,11 @@ const ServicesSection = () => {
                 </div>
               </div>
 
-              {/* Mobile View */}
+              {/* Modified Mobile View - Displaying details directly without dropdown */}
               <div className="d-md-none">
                 <div className="service-card-mobile">
-                  <div className="service-card-header">
-                    <Row className="bg-dar">
+                  <div className="service-card-header mb-3">
+                    <Row>
                       <Col xs={12}>
                         <img
                           src={service.image}
@@ -289,37 +248,16 @@ const ServicesSection = () => {
                           className="img-fluid rounded-3 service-img-mobile"
                         />
                       </Col>
-                      <Col xs={10} className="bg-primar mt-3">
+                      <Col xs={12} className="mt-3">
                         <h3 className="service-title-mobile">
                           {service.title}
                         </h3>
                       </Col>
-                      <Col
-                        xs={2}
-                        className="d-flex align-items-center justify-content-center"
-                      >
-                        <Button
-                          variant="white"
-                          className="nav-arrow-mobile rounded-circle"
-                          onClick={() => toggleMobileDetails(service.id)}
-                        >
-                          {expandedServices[service.id] ? (
-                            <BsChevronUp size={16} color="#6c757d" />
-                          ) : (
-                            <BsChevronDown size={16} color="#6c757d" />
-                          )}
-                        </Button>
-                      </Col>
                     </Row>
                   </div>
 
-                  <div
-                    className="service-details-mobile overflow-hidden"
-                    ref={(el) => {
-                      detailRefs.current[service.id] = el;
-                    }}
-                    style={{ height: 0, opacity: 0 }}
-                  >
+                  {/* Always visible service details on mobile */}
+                  <div className="service-details-mobile">
                     <ul className="service-list-mobile">
                       {service.details.map((detail, i) => (
                         <li key={i}>{detail}</li>

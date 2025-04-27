@@ -67,20 +67,20 @@ section {
 }
 
 /* Responsive adjustments */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .heading-dash {
     width: 100px !important;
   }
 }
 
-@media (min-width: 992px) {
+/* @media (max-width: 992px) {
   .heading-dash {
     width: 150px !important;
   }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
   .heading-dash {
     width: 288px !important;
   }
-}
+} */

@@ -48,7 +48,7 @@ const AboutUsSection = () => {
         </div>
       </div>
       <div className="row who-are-we-bottom-container" ref={bottomContainerRef}>
-        <div className="col-md-3 col-12 d-flex justify-content-md-end align-items-end">
+        <div className="col-md-3 col-12 d-flex justify-content-md-end align-items-end ms-2 ms-md-0">
           <button className="common-button d-flex px-2">
             <FaArrowRight />
             <div>Learn more</div>
