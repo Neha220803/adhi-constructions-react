@@ -29,7 +29,9 @@ const ServiceLocations = () => {
       <Container>
         <Row className="mb-5 px-3 d-flex px-md-0">
           <div className="section-heading d-flex p-0" ref={headingRef}>
-            <span className="heading-title-uppercase"> Location</span>{" "}
+            <span className="heading-title-uppercase text-dark">
+              OUR Location
+            </span>{" "}
             <span className="heading-dash"></span> We proudly serve{" "}
             <span className="section-heading-active">nassau county </span>
             and <span className="section-heading-active">suffolk county</span>,

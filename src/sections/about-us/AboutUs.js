@@ -20,7 +20,7 @@ const AboutUsSection = () => {
   }, []);
 
   return (
-    <section className="bg-primar">
+    <div className="bg-primar mb-5 pb-3">
       <div className="container">
         <div className="row">
           <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
@@ -71,7 +71,7 @@ const AboutUsSection = () => {
           />
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

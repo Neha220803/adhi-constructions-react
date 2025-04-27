@@ -118,11 +118,13 @@ const ServicesSection = () => {
   };
 
   return (
-    <section className="services-section py-5" id="our-services">
+    <section className="services-section mt-5 py-5" id="our-services">
       <Container>
-        <Row className=" mb-4">
+        <Row className="mx-2 mb-4">
           <div className="section-heading d-flex p-0" ref={headingRef}>
-            <span className="heading-title-uppercase">OUR SERVICES</span>{" "}
+            <span className="heading-title-uppercase text-dark">
+              OUR SERVICES
+            </span>{" "}
             <span className="heading-dash"></span> At ADHI Construction,
             <span className="section-heading-active">
               WE PROVIDE TOP NOTCH{" "}

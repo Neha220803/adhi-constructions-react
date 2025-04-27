@@ -214,7 +214,9 @@ const ExpertiseSection = () => {
       <Container>
         <Row className="mb-5 px-3 px-md-0">
           <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
-            <span className="heading-title-uppercase">OUR expertise</span>{" "}
+            <span className="heading-title-uppercase text-dark">
+              OUR expertise
+            </span>{" "}
             <span className="heading-dash"></span>{" "}
             <span className="section-heading-active">
               At ADHI Construction,{" "}

@@ -11,7 +11,7 @@ const Navigation = () => {
   useEffect(() => {
     // Initialize the timeline
     tlRef.current = gsap.timeline({
-      defaults: { duration: 1, ease: "expo.inOut" },
+      defaults: { duration: 0.5, ease: "expo.inOut" },
       paused: true, // Start the timeline in paused state
     });
 
