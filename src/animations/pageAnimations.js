@@ -352,79 +352,62 @@ export const createExpertiseAnimation = (headingRef, cardsRef) => {
   };
 };
 
-gsap.registerPlugin(ScrollTrigger);
-
 export const createServiceLocationsAnimation = (headingRef, sectionRef) => {
   // Wait for DOM to be ready
-  const timer = setTimeout(() => {
-    if (!headingRef.current || !sectionRef.current) return;
+  const headingTrigger = createHeadingAnimation(headingRef, {
+    animationDirection: "y",
+    animationDistance: 30,
+    staggerTime: 0.08,
+    ease: "power2.out",
+  });
 
-    // Heading animation
+  // Get all location card images
+  const images = sectionRef.current.querySelectorAll(".card-image-inner");
+
+  // Set initial states for images
+  images.forEach((image) => {
+    gsap.set(image, {
+      scale: 1.5,
+      opacity: 1,
+      transformOrigin: "center center",
+    });
+  });
+
+  // Image animations
+  images.forEach((image) => {
+    gsap.to(image, {
+      scale: 1.2,
+      ease: "none",
+      scrollTrigger: {
+        trigger: image.parentNode,
+        start: "top bottom",
+        end: "center center",
+        scrub: 0.5,
+      },
+    });
+  });
+
+  // Animate location cards
+  const locationCards = sectionRef.current.querySelectorAll(".location-card");
+  locationCards.forEach((card, index) => {
     gsap.fromTo(
-      headingRef.current,
-      { y: 30, opacity: 0 },
+      card,
+      { y: 50, opacity: 0 },
       {
         y: 0,
         opacity: 1,
         duration: 0.8,
+        delay: index * 0.2 + 0.3, // Staggered delay after heading animation
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",
+          start: "top 70%",
           toggleActions: "play none none none",
         },
       }
     );
-
-    // Get all location card images
-    const images = sectionRef.current.querySelectorAll(".card-image-inner");
-
-    // Set initial states for images
-    images.forEach((image) => {
-      gsap.set(image, {
-        scale: 1.5,
-        opacity: 1,
-        transformOrigin: "center center",
-      });
-    });
-
-    // Image animations
-    images.forEach((image) => {
-      gsap.to(image, {
-        scale: 1.2,
-        ease: "none",
-        scrollTrigger: {
-          trigger: image.parentNode,
-          start: "top bottom",
-          end: "center center",
-          scrub: 0.5,
-        },
-      });
-    });
-
-    // Animate location cards
-    const locationCards = sectionRef.current.querySelectorAll(".location-card");
-    locationCards.forEach((card, index) => {
-      gsap.fromTo(
-        card,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          delay: index * 0.2 + 0.3, // Staggered delay after heading animation
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 70%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    });
-  }, 100);
-
+  });
   // Return cleanup function
   return () => {
-    clearTimeout(timer);
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   };
 };

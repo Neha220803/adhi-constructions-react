@@ -120,17 +120,19 @@ const ServicesSection = () => {
   return (
     <section className="services-section py-5" id="our-services">
       <Container>
-        <Row>
-          <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
+        <Row className=" mb-4">
+          <div className="section-heading d-flex p-0" ref={headingRef}>
             <span className="heading-title-uppercase">OUR SERVICES</span>{" "}
-            <span className="heading-dash"></span>{" "}
+            <span className="heading-dash"></span> At ADHI Construction,
             <span className="section-heading-active">
-              WE PROVIDE TOP NOTCH SERVICES{" "}
+              WE PROVIDE TOP NOTCH{" "}
             </span>
-            At ADHI Construction, we provide a full range of construction
-            solutions to meet the needs of residential, commercial projects. Our
-            services include
+            full range of construction solutions to meet the needs of
+            residential and commercial projects.
           </div>
+          <span className="text-capitalize section-heading text-dark">
+            Our services include :
+          </span>
         </Row>
 
         {services.map((service, index) => (

@@ -43,7 +43,7 @@
 
 .main-slide-col-1,
 .right-slide-col-1 {
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
     border-radius: 8px;
     display: flex;
     align-items: center;

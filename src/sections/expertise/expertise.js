@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,104 +21,9 @@ const ExpertiseSection = () => {
   const cardsRef = useRef([]);
   const headingRef = useRef(null);
   const cardRowRef = useRef(null);
-
-  useEffect(() => {
-    // Animate heading using our reusable function
-    const headingTrigger = createHeadingAnimation(headingRef, {
-      animationDirection: "y",
-      animationDistance: 30,
-      staggerTime: 0.08,
-      ease: "power2.out",
-    });
-
-    // Set up GSAP for cards
-    gsap.set(".expertise-card", {
-      transformStyle: "preserve-3d",
-      opacity: 0,
-      y: 50,
-    });
-
-    gsap.set(".expertise-card-back", {
-      rotationY: 180,
-      backfaceVisibility: "hidden",
-    });
-
-    gsap.set(".expertise-card-front", {
-      backfaceVisibility: "hidden",
-    });
-
-    // Create entrance animation for cards
-    const cardsTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: cardRowRef.current,
-        start: "top 80%",
-        once: true,
-      },
-    });
-
-    // Animate each card in staggered
-    cardsTimeline.to(".expertise-card", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power2.out",
-    });
-
-    // Create flip timelines for each card
-    const flipTimelines = [];
-
-    // Set up animations
-    cardsRef.current.forEach((card, index) => {
-      if (card) {
-        const tl = gsap.timeline({ paused: true });
-        tl.to(card, { duration: 0.6, rotationY: 180, ease: "power2.inOut" });
-        flipTimelines.push(tl);
-
-        // Add event listeners
-        card.addEventListener("mouseenter", () => tl.play());
-        card.addEventListener("mouseleave", () => tl.reverse());
-
-        // Fix for iOS / touch devices
-        card.addEventListener("touchstart", (e) => {
-          e.preventDefault();
-          if (tl.progress() === 0) {
-            tl.play();
-          } else {
-            tl.reverse();
-          }
-        });
-      }
-    });
-
-    // Cleanup
-    return () => {
-      if (headingTrigger) headingTrigger.kill();
-      cardsTimeline.scrollTrigger && cardsTimeline.scrollTrigger.kill();
-      cardsTimeline.kill();
-
-      flipTimelines.forEach((tl) => tl.kill());
-      cardsRef.current.forEach((card) => {
-        if (card) {
-          card.removeEventListener("mouseenter", () => {});
-          card.removeEventListener("mouseleave", () => {});
-          card.removeEventListener("touchstart", () => {});
-        }
-      });
-    };
-  }, []);
-
-  // Reset refs array when component re-renders
-  useEffect(() => {
-    cardsRef.current = [];
-  }, []);
-
-  // Add to refs array
-  const addToRefs = (el) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
+  const flipTimelineRefs = useRef({});
+  const [flippedStates, setFlippedStates] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   // Service data
   const services = [
@@ -166,6 +71,144 @@ const ExpertiseSection = () => {
     },
   ];
 
+  useEffect(() => {
+    // Check if mobile and update state
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener("resize", checkMobile);
+
+    // Animate heading using our reusable function
+    const headingTrigger = createHeadingAnimation(headingRef, {
+      animationDirection: "y",
+      animationDistance: 30,
+      staggerTime: 0.08,
+      ease: "power2.out",
+    });
+
+    // Set up GSAP for cards
+    gsap.set(".expertise-card", {
+      transformStyle: "preserve-3d",
+      opacity: 0,
+      y: 50,
+    });
+
+    gsap.set(".expertise-card-back", {
+      rotationY: 180,
+      backfaceVisibility: "hidden",
+    });
+
+    gsap.set(".expertise-card-front", {
+      backfaceVisibility: "hidden",
+    });
+
+    // Create entrance animation for cards
+    const cardsTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: cardRowRef.current,
+        start: "top 80%",
+        once: true,
+      },
+    });
+
+    // Animate each card in staggered
+    cardsTimeline.to(".expertise-card", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power2.out",
+    });
+
+    // Create flip timelines for each card
+    services.forEach((service, index) => {
+      if (cardsRef.current[index]) {
+        const card = cardsRef.current[index];
+        // Create a new timeline for each card
+        const tl = gsap.timeline({ paused: true });
+        tl.to(card, { duration: 0.6, rotationY: 180, ease: "power2.inOut" });
+        flipTimelineRefs.current[service.id] = tl;
+      }
+    });
+
+    // Cleanup
+    return () => {
+      if (headingTrigger) headingTrigger.kill();
+      if (cardsTimeline.scrollTrigger) cardsTimeline.scrollTrigger.kill();
+      cardsTimeline.kill();
+
+      Object.values(flipTimelineRefs.current).forEach((tl) => {
+        if (tl) tl.kill();
+      });
+
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  // Reset refs array when component re-renders
+  useEffect(() => {
+    cardsRef.current = [];
+  }, []);
+
+  // Add to refs array
+  const addToRefs = (el) => {
+    if (el && !cardsRef.current.includes(el)) {
+      cardsRef.current.push(el);
+    }
+  };
+
+  // Handle mouse events for desktop
+  const handleMouseEnter = (service) => {
+    if (!isMobile) {
+      const tl = flipTimelineRefs.current[service.id];
+      if (tl) {
+        tl.play();
+      }
+    }
+  };
+
+  const handleMouseLeave = (service) => {
+    if (!isMobile) {
+      const tl = flipTimelineRefs.current[service.id];
+      if (tl) {
+        tl.reverse();
+      }
+    }
+  };
+
+  // Handle touch events for mobile
+  const handleTouchStart = (e, service) => {
+    if (isMobile) {
+      e.preventDefault();
+      const serviceId = service.id;
+      const tl = flipTimelineRefs.current[serviceId];
+
+      if (tl) {
+        // Check if this card is currently flipped
+        const isCurrentlyFlipped = flippedStates[serviceId];
+
+        if (isCurrentlyFlipped) {
+          // If it's flipped, reverse the animation
+          tl.reverse();
+        } else {
+          // If it's not flipped, play the animation
+          tl.play();
+        }
+
+        // Update the flipped state
+        setFlippedStates((prev) => ({
+          ...prev,
+          [serviceId]: !isCurrentlyFlipped,
+        }));
+      }
+    }
+  };
+
   return (
     <section className="expertise-section py-5" id="expertise">
       <Container>
@@ -194,7 +237,13 @@ const ExpertiseSection = () => {
           {services.map((service, index) => (
             <Col md={6} lg={4} key={service.id} className="mb-4">
               <div className="expertise-card-container">
-                <div className="expertise-card" ref={addToRefs}>
+                <div
+                  className="expertise-card"
+                  ref={addToRefs}
+                  onMouseEnter={() => handleMouseEnter(service)}
+                  onMouseLeave={() => handleMouseLeave(service)}
+                  onTouchStart={(e) => handleTouchStart(e, service)}
+                >
                   {/* Front of card */}
                   <div className="expertise-card-front">
                     <div className="expertise-card-inner">

@@ -37,7 +37,7 @@ const AboutUsSection = () => {
             OF PROFESSIONALS TO EVERY PROJECT. OUR EXPERTISE SPANS
             <span className="section-heading-active">
               {" "}
-              COMMERCIAL, RESIDENTIAL{" "}
+              COMMERCIAL and RESIDENTIAL{" "}
             </span>
             SECTORS, ENSURING THAT WE MEET THE UNIQUE
             <span className="section-heading-active">
