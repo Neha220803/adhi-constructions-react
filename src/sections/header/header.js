@@ -16,12 +16,12 @@ const HeaderComp = () => {
   }, []);
 
   return (
-    <div className="header-container" ref={headerRef}>
+    <div className="header-container" ref={headerRef} id="home">
       <header>
         <div className="header-bg" ref={headerBgRef}></div>
         <div className="container">
           <div className="row">
-            <div className="header-content">AADHI CONSTRUCTIONS</div>
+            <div className="header-content">ADHI CONSTRUCTIONS</div>
           </div>
           <div className="row d-flex align-items-center justify-content-center pt-5">
             {/* <dotlottie-player

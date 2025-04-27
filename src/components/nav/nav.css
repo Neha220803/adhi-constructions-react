@@ -124,7 +124,7 @@ nav .close div::after {
     width: 30px;
     height: 4px;
     background: #fff;
-    transition: background .5s ease;
+    transition: all 0.5s ease;
 }
 
 nav .close div::before {

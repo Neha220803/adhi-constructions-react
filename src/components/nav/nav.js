@@ -1,76 +1,111 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./nav.css";
 
 const Navigation = () => {
+  // Use refs to store the timeline and DOM elements
+  const tlRef = useRef();
+  const navContainerRef = useRef(null);
+  const closeButtonRef = useRef(null);
+
   useEffect(() => {
-    const open = document.querySelector(".nav-container");
-    const close = document.querySelector(".close");
-    var tl = gsap.timeline({ defaults: { duration: 1, ease: "expo.inOut" } });
-
-    open.addEventListener("click", () => {
-      if (tl.reversed()) {
-        tl.play();
-      } else {
-        tl.to("nav", { right: 0 })
-          .to("nav", { height: "100vh", immediateRender: false }, 0) // Changed timing and added immediateRender
-          .to(
-            "nav ul li a",
-            { opacity: 1, pointerEvents: "all", stagger: 0.2 },
-            "-=.8"
-          )
-          .to(".close", { opacity: 1, pointerEvents: "all" }, "-=.8")
-          .to("nav h2", { opacity: 1 }, "-=1")
-          .to(".nav-container", { opacity: 0, pointerEvents: "none" }, "-=1"); // Hide the hamburger icon
-      }
+    // Initialize the timeline
+    tlRef.current = gsap.timeline({
+      defaults: { duration: 1, ease: "expo.inOut" },
+      paused: true, // Start the timeline in paused state
     });
 
-    close.addEventListener("click", () => {
-      tl.reverse().eventCallback("onReverseComplete", () => {
-        // Make sure hamburger icon is visible again after animation is complete
-        gsap.to(".nav-container", {
-          opacity: 1,
-          pointerEvents: "all",
-          duration: 0.3,
-        });
-      });
-    });
+    // Get DOM elements using refs where possible
+    const navElement = document.querySelector("nav");
+    const navLinks = document.querySelectorAll("nav ul li a");
+    const navTitle = document.querySelector("nav h2");
 
-    // Cleanup function
-    return () => {
-      open.removeEventListener("click", () => {});
-      close.removeEventListener("click", () => {});
+    // Set up the timeline animation sequence
+    tlRef.current
+      .to(navElement, { right: 0 })
+      .to(navElement, { height: "100vh" }, 0)
+      .to(navLinks, { opacity: 1, pointerEvents: "all", stagger: 0.2 }, "-=.8")
+      .to(closeButtonRef.current, { opacity: 1, pointerEvents: "all" }, "-=.8")
+      .to(navTitle, { opacity: 1 }, "-=1")
+      .to(
+        navContainerRef.current,
+        { opacity: 0, pointerEvents: "none" },
+        "-=1"
+      );
+
+    // Define click handlers
+    const handleOpenClick = () => {
+      tlRef.current.play();
     };
+
+    const handleCloseClick = () => {
+      tlRef.current.reverse();
+    };
+
+    // Add event listeners if refs are available
+    if (navContainerRef.current && closeButtonRef.current) {
+      navContainerRef.current.addEventListener("click", handleOpenClick);
+      closeButtonRef.current.addEventListener("click", handleCloseClick);
+
+      // Cleanup function
+      return () => {
+        if (navContainerRef.current) {
+          navContainerRef.current.removeEventListener("click", handleOpenClick);
+        }
+        if (closeButtonRef.current) {
+          closeButtonRef.current.removeEventListener("click", handleCloseClick);
+        }
+      };
+    }
   }, []);
+
+  // Handle menu item clicks - close the menu when a menu item is clicked
+  const handleMenuItemClick = () => {
+    if (tlRef.current) {
+      tlRef.current.reverse();
+    }
+  };
 
   return (
     <>
-      <div className="nav-container">
+      <div className="nav-container" ref={navContainerRef}>
         <div className="bars"></div>
       </div>
       <nav>
         <h2>ADHI CONSTRUCTIONS</h2>
-        <div className="close">
+        <div className="close" ref={closeButtonRef}>
           <div></div>
         </div>
         <ul>
           <li>
-            <a href="#">Home</a>
+            <a href="#" onClick={handleMenuItemClick}>
+              Home
+            </a>
           </li>
           <li>
-            <a href="#about">About Us</a>
+            <a href="#about" onClick={handleMenuItemClick}>
+              About Us
+            </a>
           </li>
           <li>
-            <a href="#our-services">Our Services</a>
+            <a href="#our-services" onClick={handleMenuItemClick}>
+              Our Services
+            </a>
           </li>
           <li>
-            <a href="#expertise">Expertise</a>
+            <a href="#expertise" onClick={handleMenuItemClick}>
+              Expertise
+            </a>
           </li>
           <li>
-            <a href="#locations">Locations</a>
+            <a href="#locations" onClick={handleMenuItemClick}>
+              Locations
+            </a>
           </li>
           <li>
-            <a href="#contact">Contact Us</a>
+            <a href="#contact" onClick={handleMenuItemClick}>
+              Contact Us
+            </a>
           </li>
         </ul>
       </nav>

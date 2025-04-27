@@ -1,128 +1,51 @@
 import React, { useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createServiceLocationsAnimation } from "../../animations/pageAnimations";
 import "./serviceLocations.css";
 
 // Import images
-import locationImg1 from "../../assets/images/queens.png";
 import locationImg2 from "../../assets/images/suffolk.png";
 import locationImg3 from "../../assets/images/nassau.png";
-import logoOverlay from "../../assets/images/about-1.jpg"; // For the watermark
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
 
 const ServiceLocations = () => {
-  // Refs for each location image
-  const queensRef = useRef(null);
-  const suffolkRef = useRef(null);
-  const nassauRef = useRef(null);
+  // Refs for animation targets - matching the parameters expected by createServiceLocationsAnimation
+  const headingRef = useRef(null);
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    // Set up animations once components are mounted
-    const setupAnimations = () => {
-      // Create a batch of scroll triggers for all images
-      const images = [
-        {
-          element: queensRef.current,
-          parentContainer: queensRef.current.parentNode,
-        },
-        {
-          element: suffolkRef.current,
-          parentContainer: suffolkRef.current.parentNode,
-        },
-        {
-          element: nassauRef.current,
-          parentContainer: nassauRef.current.parentNode,
-        },
-      ];
+    // Initialize animation from the separate file
+    const cleanup = createServiceLocationsAnimation(headingRef, sectionRef);
 
-      images.forEach((image) => {
-        // Set initial scale to 1.2 (zoomed in)
-        gsap.set(image.element, {
-          scale: 1.5,
-          opacity: 1,
-          transformOrigin: "center center",
-        });
-
-        // Create the scale down animation tied to scroll
-        gsap.to(image.element, {
-          scale: 1.2,
-          ease: "none",
-          scrollTrigger: {
-            trigger: image.parentContainer,
-            start: "top bottom", // starts when top of element reaches bottom of viewport
-            end: "center center", // ends when center of element reaches center of viewport
-            scrub: 0.5, // smoother scrubbing effect
-          },
-        });
-      });
-
-      // Entry animation for text elements
-      const textElements =
-        sectionRef.current.querySelectorAll(".animate-entry");
-      textElements.forEach((el, index) => {
-        gsap.fromTo(
-          el,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: index * 0.2,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 80%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      });
-    };
-
-    // Wait a small moment for everything to be properly rendered
-    const timer = setTimeout(setupAnimations, 100);
-
-    // Cleanup
-    return () => {
-      clearTimeout(timer);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    // Cleanup on component unmount
+    return cleanup;
   }, []);
 
   return (
-    <section className="" ref={sectionRef}>
+    <section
+      className="service-locations-section"
+      ref={sectionRef}
+      id="locations"
+    >
       <Container>
         <Row className="mb-5 px-3 px-md-0">
-          <div className="section-heading ">
-            OUR locations -{" "}
-            <span className="section-heading-active">We proudly serve</span>{" "}
-            Queens, Nassau County, and Suffolk County, ensuring
-            <span className="section-heading-active"> HIGH QUALITY</span>{" "}
-            craftsmanship, timely project execution, and full compliance with
-            local regulations.
+          <div className="section-heading" ref={headingRef}>
+            <div className="text-uppercase">OUR LOCATIONS</div>
+            {/* <div className="heading-dash"></div> */}
+            <div className="section-text">
+              we proudly serve nassau county and suffolk county, ensuring
+              <span className="section-heading-active"> high quality</span>{" "}
+              craftsmanship, timely project execution, and full compliance with
+              local regulations.
+            </div>
           </div>
         </Row>
 
         <Row className="location-cards-container">
-          {/* Left Column */}
-          <Col md={6} className="d-flex flex-column">
-            {/* Queens Card */}
-            <div className="location-card mb-md-5">
+          {/* Nassau County */}
+          <Col md={6} className="d-flex flex-column justify-content-center">
+            <div className="location-card">
               <div className="card-image-wrapper">
-                <div className="card-image-inner" ref={queensRef}>
-                  <img src={locationImg1} alt="Queens" className="card-image" />
-                </div>
-                <div className="location-label">QUEENS</div>
-              </div>
-            </div>
-
-            {/* Nassau Card */}
-            <div className="location-card mt-md-5">
-              <div className="card-image-wrapper">
-                <div className="card-image-inner" ref={nassauRef}>
+                <div className="card-image-inner">
                   <img
                     src={locationImg3}
                     alt="Nassau County"
@@ -134,14 +57,14 @@ const ServiceLocations = () => {
             </div>
           </Col>
 
-          {/* Right Column - Suffolk */}
+          {/* Suffolk County */}
           <Col
             md={6}
             className="d-flex align-items-center justify-content-center"
           >
             <div className="location-card">
               <div className="card-image-wrapper">
-                <div className="card-image-inner" ref={suffolkRef}>
+                <div className="card-image-inner">
                   <img
                     src={locationImg2}
                     alt="Suffolk County"

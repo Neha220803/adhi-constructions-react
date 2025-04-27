@@ -40,7 +40,7 @@ section {
   font-family: "Trap";
   font-weight: bold;
   font-size: 26px !important;
-  text-transform: uppercase !important;
+  text-transform: lowercase !important;
   color: #7e7b7b;
   overflow-wrap: break-word;
   margin-bottom: 10px !important;
@@ -60,6 +60,10 @@ section {
   background-color: #000 !important;
   margin: 0 10px !important;
   vertical-align: middle;
+}
+
+.heading-title-uppercase {
+  text-transform: uppercase !important;
 }
 
 /* Responsive adjustments */

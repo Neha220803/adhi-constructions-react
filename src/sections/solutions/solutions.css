@@ -6,9 +6,11 @@
 }
 
 .intro-text {
+  margin-top: 10px !important;
   margin-bottom: 30px !important;
-  /* font-size: 18px !important; */
-  /* font-family: "Trap"; */
+  /* font-size: 18px !important;
+  font-weight: 900 !important;
+  font-family: "Trap"; */
   color: #2c2c2c !important;
   font-weight: 100 !important;
 }

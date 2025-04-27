@@ -50,7 +50,7 @@ const ContactUsComp = () => {
   };
 
   return (
-    <section className="contact-us-bg" id="contact-us">
+    <section className="contact-us-bg" id="contact">
       <Container>
         <Row>
           <Col md={6} className="text-white">

@@ -35,7 +35,7 @@ const ServicesSection = () => {
     },
     {
       id: 2,
-      title: "CERTIFIED TRADE SERVICES",
+      title: "CERTIFIED PLUMBING SERVICES",
       image: serviceImg2,
       details: [
         "Electrical installations and Updates",
@@ -159,17 +159,18 @@ const ServicesSection = () => {
   };
 
   return (
-    <section className="services-section py-5">
+    <section className="services-section py-5" id="our-services">
       <Container>
         <Row>
           <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
-            OUR SERVICES <span className="heading-dash"></span>{" "}
+            <span className="heading-title-uppercase">OUR SERVICES</span>{" "}
+            <span className="heading-dash"></span>{" "}
             <span className="section-heading-active">
               WE PROVIDE TOP NOTCH SERVICES{" "}
             </span>
             At ADHI Construction, we provide a full range of construction
-            solutions to meet the needs of residential, commercial, AND
-            industrial industrial projects. Our services include
+            solutions to meet the needs of residential, commercial projects. Our
+            services include
           </div>
         </Row>
 

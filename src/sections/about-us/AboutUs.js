@@ -24,7 +24,7 @@ const AboutUsSection = () => {
       <div className="container">
         <div className="row">
           <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
-            <span>WHO WE ARE</span>
+            <span className="text-uppercase">WHO WE ARE</span>
             <span className="heading-dash"></span>{" "}
             <span className="section-heading-active">
               FOUNDED WITH A COMMITMENT
@@ -37,7 +37,7 @@ const AboutUsSection = () => {
             OF PROFESSIONALS TO EVERY PROJECT. OUR EXPERTISE SPANS
             <span className="section-heading-active">
               {" "}
-              COMMERCIAL, RESIDENTIAL, HEALTHCARE, INSTITUTIONAL, AND RETAIL{" "}
+              COMMERCIAL, RESIDENTIAL{" "}
             </span>
             SECTORS, ENSURING THAT WE MEET THE UNIQUE
             <span className="section-heading-active">

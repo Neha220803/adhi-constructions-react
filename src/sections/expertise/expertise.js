@@ -167,16 +167,17 @@ const ExpertiseSection = () => {
   ];
 
   return (
-    <section className="expertise-section py-5">
+    <section className="expertise-section py-5" id="expertise">
       <Container>
         <Row className="mb-5 px-3 px-md-0">
-          <div className="section-heading mb-5 pb-2 " ref={headingRef}>
-            OUR expertise <span className="heading-dash"></span>{" "}
+          <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
+            <span className="heading-title-uppercase">OUR expertise</span>{" "}
+            <span className="heading-dash"></span>{" "}
             <span className="section-heading-active">
-              At ADHI Construction,
-            </span>{" "}
-            we take pride in delivering high quality construction services
-            backed by a team of{" "}
+              At ADHI Construction,{" "}
+            </span>
+            we take pride in delivering high quality constructionservices backed
+            by a team of{" "}
             <span className="section-heading-active">
               certified professionals
             </span>

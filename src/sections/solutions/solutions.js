@@ -30,7 +30,7 @@ const SolutionsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="min-vh-100">
+    <section ref={sectionRef} className="min-vh-100" id="about">
       <Container className="px-0 h-100">
         <Row className="g-0 h-100 solution-container mt-5">
           <Col lg={7} md={7} xs={12} className="">
@@ -42,7 +42,7 @@ const SolutionsSection = () => {
                     className="me-2"
                   /> */}
                   <h2
-                    className="section-heading section-heading-active"
+                    className="section-heading section-heading-active text-uppercase"
                     ref={headingRef}
                   >
                     {" "}
@@ -56,7 +56,7 @@ const SolutionsSection = () => {
                   ref={introTextRef}
                   style={{ marginBottom: "1.5rem" }}
                 >
-                  Welcome to ADHI Construction, your trusted partner in building
+                  Adhi construction is your trusted partner in building
                   excellence. As a premier general contracting and construction
                   management firm based in New York, we specialize in delivering
                   high-quality projects across a diverse range of sectors.
