@@ -212,7 +212,7 @@ const ExpertiseSection = () => {
   return (
     <section className="expertise-section py-5" id="expertise">
       <Container>
-        <Row className="mb-5 px-3 px-md-0">
+        <Row className="mb-2 px-2 px-md-0">
           <div className="section-heading d-flex mb-5 pb-2" ref={headingRef}>
             <span className="heading-title-uppercase text-dark">
               OUR expertise
