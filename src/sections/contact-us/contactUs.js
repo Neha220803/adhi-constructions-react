@@ -78,7 +78,7 @@ const ContactUsComp = () => {
 
       // Send the email using EmailJS
       await emailjs.send(
-        "service_vz98zz", // Your service ID
+        "service_vz98zzo", // Your service ID
         "template_kcfh7n2", // Your template ID
         templateParams,
         "bql19IHSmzPWHoJiX" // Your public key
@@ -107,7 +107,8 @@ const ContactUsComp = () => {
       // Show error toast
       setToastVariant("danger");
       setToastMessage(
-        `Failed to send! ${error.text || "Please try again later."}`
+        "Failed to send ! Please try again later."
+        /*  ${error.text || "Please try again later."} */
       );
       setShowToast(true);
     }
