@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Adhi Constructions - Page Not Found</title>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         // Single Page Apps for GitHub Pages
         // MIT License
         // This script takes the current URL and converts the path and query
@@ -28,7 +28,13 @@
             (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
             l.hash
         );
+    </script> -->
+    <script type="text/javascript">
+        var l = window.location;
+        var newUrl = l.protocol + "//" + l.hostname + (l.port ? ":" + l.port : "") + "/#" + l.pathname;
+        window.location.replace(newUrl);
     </script>
+
 </head>
 
 <body>
