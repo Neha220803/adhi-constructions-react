@@ -1,13 +1,15 @@
-import "./App.css";
-import CallNowButtonComp from "./components/buttons/CallNowButton";
+import { HashRouter, Routes, Route, BrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import NotFoundPage from "./404/404";
 
 function App() {
   return (
-    <div>
-      <HomePage />
-      <CallNowButtonComp />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
