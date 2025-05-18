@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import emailjs from "emailjs-com";
-import ToastMessage from "../../components/toast/toastMssg"; // Import the ToastMessage component
+import ReCAPTCHA from "react-google-recaptcha";
+import ToastMessage from "../../components/toast/toastMssg";
 import "./contactUs.css";
 
 const ContactUsComp = () => {
@@ -13,7 +14,11 @@ const ContactUsComp = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastVariant, setToastVariant] = useState("success");
   const [toastMessage, setToastMessage] = useState("");
-  const [errors, setErrors] = useState({ email: "", phone: "" });
+  const [errors, setErrors] = useState({ email: "", phone: "", recaptcha: "" });
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  // Create a ref for the reCAPTCHA
+  const recaptchaRef = useRef(null);
 
   // Basic sanitization (prevent XSS payloads or junk input)
   const sanitizeInput = (input) => {
@@ -22,7 +27,7 @@ const ContactUsComp = () => {
 
   const validateForm = () => {
     let isValid = true;
-    const newErrors = { email: "", phone: "" };
+    const newErrors = { email: "", phone: "", recaptcha: "" };
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
@@ -46,6 +51,12 @@ const ContactUsComp = () => {
       isValid = false;
     }
 
+    // Validate reCAPTCHA
+    if (!captchaVerified) {
+      newErrors.recaptcha = "Please verify that you are not a robot";
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -54,6 +65,12 @@ const ContactUsComp = () => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
     setErrors((prev) => ({ ...prev, [id]: "" }));
+  };
+
+  const handleRecaptchaChange = (value) => {
+    // value will be null if expired or a string token when verified
+    setCaptchaVerified(!!value);
+    setErrors((prev) => ({ ...prev, recaptcha: "" }));
   };
 
   const handleSubmit = async (e) => {
@@ -91,6 +108,12 @@ const ContactUsComp = () => {
         loading: false,
       });
 
+      // Reset the reCAPTCHA
+      setCaptchaVerified(false);
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+
       // Show success toast
       setToastVariant("success");
       setToastMessage(
@@ -107,8 +130,7 @@ const ContactUsComp = () => {
       // Show error toast
       setToastVariant("danger");
       setToastMessage(
-        "Failed to send ! Please try again later."
-        /*  ${error.text || "Please try again later."} */
+        "Failed to send! Please try again later."
       );
       setShowToast(true);
     }
@@ -166,6 +188,21 @@ const ContactUsComp = () => {
                     {errors.phone}
                   </Form.Control.Feedback>
                 </Form.Group>
+
+                {/* Google reCAPTCHA */}
+                <div className="mb-3 w-100">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey="6LfLBT8rAAAAAEC3Fy4SY5IuxyDyK5OaYxggAJ5u" // Replace with your actual site key
+                    onChange={handleRecaptchaChange}
+                  />
+                  {errors.recaptcha && (
+                    <div className="text-danger small mt-1">
+                      {errors.recaptcha}
+                    </div>
+                  )}
+                </div>
+
                 <div className="text-center w-100">
                   <Button
                     className="btn-contact"
