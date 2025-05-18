@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import emailjs from "emailjs-com";
+import ToastMessage from "../../components/toast/toastMssg"; // Import the ToastMessage component
 import "./contactUs.css";
 
 const ContactUsComp = () => {
-  const [formData, setFormData] = useState({ email: "", phone: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    phone: "",
+    loading: false,
+  });
+  const [showToast, setShowToast] = useState(false);
+  const [toastVariant, setToastVariant] = useState("success");
+  const [toastMessage, setToastMessage] = useState("");
   const [errors, setErrors] = useState({ email: "", phone: "" });
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
   // Basic sanitization (prevent XSS payloads or junk input)
   const sanitizeInput = (input) => {
@@ -53,7 +60,7 @@ const ContactUsComp = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    setSubmitting(true);
+    setFormData({ ...formData, loading: true });
 
     try {
       const sanitizedData = {
@@ -61,20 +68,52 @@ const ContactUsComp = () => {
         phone: sanitizeInput(formData.phone),
       };
 
-      // You can send this to a secure backend (Node, Firebase, etc.)
-      console.log("Sanitized Form Data:", sanitizedData);
+      // Prepare the template parameters for EmailJS
+      const templateParams = {
+        from_name: sanitizedData.email,
+        phone_number: sanitizedData.phone,
+        to_name: "Your Name", // You can change this
+        to_email: "ajin@adhiconstruction.us",
+      };
 
-      // Simulate success
-      setTimeout(() => {
-        setSubmitted(true);
-        setSubmitting(false);
-        setFormData({ email: "", phone: "" });
-      }, 1000);
+      // Send the email using EmailJS
+      await emailjs.send(
+        "service_vz98zz", // Your service ID
+        "template_kcfh7n2", // Your template ID
+        templateParams,
+        "bql19IHSmzPWHoJiX" // Your public key
+      );
+
+      setFormData({
+        ...formData,
+        email: "",
+        phone: "",
+        loading: false,
+      });
+
+      // Show success toast
+      setToastVariant("success");
+      setToastMessage(
+        "SUCCESS! Thank you for contacting us. We'll reach out soon."
+      );
+      setShowToast(true);
     } catch (error) {
-      console.error("Error submitting form", error);
-      setSubmitting(false);
+      console.error("Error sending email:", error);
+      setFormData({
+        ...formData,
+        loading: false,
+      });
+
+      // Show error toast
+      setToastVariant("danger");
+      setToastMessage(
+        `Failed to send! ${error.text || "Please try again later."}`
+      );
+      setShowToast(true);
     }
   };
+
+  const handleCloseToast = () => setShowToast(false);
 
   return (
     <section className="contact-us-bg" id="contact">
@@ -105,7 +144,7 @@ const ContactUsComp = () => {
                     onChange={handleChange}
                     maxLength={50}
                     isInvalid={!!errors.email}
-                    disabled={submitting}
+                    disabled={formData.loading}
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.email}
@@ -120,7 +159,7 @@ const ContactUsComp = () => {
                     onChange={handleChange}
                     maxLength={10}
                     isInvalid={!!errors.phone}
-                    disabled={submitting}
+                    disabled={formData.loading}
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.phone}
@@ -130,21 +169,24 @@ const ContactUsComp = () => {
                   <Button
                     className="btn-contact"
                     type="submit"
-                    disabled={submitting}
+                    disabled={formData.loading}
                   >
-                    {submitting ? "Submitting..." : "Submit"}
+                    {formData.loading ? "Submitting..." : "Submit"}
                   </Button>
                 </div>
-                {submitted && (
-                  <p className="mt-3 text-success text-center">
-                    ✅ Thank you! We'll contact you soon.
-                  </p>
-                )}
               </div>
             </Form>
           </Col>
         </Row>
       </Container>
+
+      {/* Toast Message Component */}
+      <ToastMessage
+        showToast={showToast}
+        onClose={handleCloseToast}
+        toastVariant={toastVariant}
+        status={toastMessage}
+      />
     </section>
   );
 };
