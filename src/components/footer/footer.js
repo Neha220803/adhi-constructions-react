@@ -46,10 +46,18 @@ const Footer = () => {
 
         <div className="footer-row center">
           <div className="items container">
-            <div className="item">Home</div>
-            <div className="item">About Us</div>
-            <div className="item">Services</div>
-            <div className="item">Projects</div>
+            <a className="item" href="#home">
+              Home
+            </a>
+            <a className="item" href="#about">
+              About Us
+            </a>
+            <a className="item" href="#our-services">
+              Services
+            </a>
+            <a className="item" href="#expertise">
+              Our Expertise
+            </a>
           </div>
 
           <div className="circles">
