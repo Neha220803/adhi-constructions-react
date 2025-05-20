@@ -9,12 +9,18 @@ const ContactUsComp = () => {
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
+    message: "", // Added message field
     loading: false,
   });
   const [showToast, setShowToast] = useState(false);
   const [toastVariant, setToastVariant] = useState("success");
   const [toastMessage, setToastMessage] = useState("");
-  const [errors, setErrors] = useState({ email: "", phone: "", recaptcha: "" });
+  const [errors, setErrors] = useState({
+    email: "",
+    phone: "",
+    message: "",
+    recaptcha: "",
+  });
   const [captchaVerified, setCaptchaVerified] = useState(false);
 
   // Create a ref for the reCAPTCHA
@@ -27,13 +33,14 @@ const ContactUsComp = () => {
 
   const validateForm = () => {
     let isValid = true;
-    const newErrors = { email: "", phone: "", recaptcha: "" };
+    const newErrors = { email: "", phone: "", message: "", recaptcha: "" };
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
 
     const sanitizedEmail = sanitizeInput(formData.email);
     const sanitizedPhone = sanitizeInput(formData.phone);
+    const sanitizedMessage = sanitizeInput(formData.message);
 
     if (!sanitizedEmail) {
       newErrors.email = "Email is required";
@@ -48,6 +55,14 @@ const ContactUsComp = () => {
       isValid = false;
     } else if (!phoneRegex.test(sanitizedPhone)) {
       newErrors.phone = "Enter a valid 10-digit phone number";
+      isValid = false;
+    }
+
+    if (!sanitizedMessage) {
+      newErrors.message = "Please describe how we can help you";
+      isValid = false;
+    } else if (sanitizedMessage.length < 3) {
+      newErrors.message = "Message must be at least 3 characters";
       isValid = false;
     }
 
@@ -83,12 +98,14 @@ const ContactUsComp = () => {
       const sanitizedData = {
         email: sanitizeInput(formData.email),
         phone: sanitizeInput(formData.phone),
+        message: sanitizeInput(formData.message),
       };
 
       // Prepare the template parameters for EmailJS
       const templateParams = {
         from_name: sanitizedData.email,
         phone_number: sanitizedData.phone,
+        message: sanitizedData.message, // Added message to template params
         to_name: "Your Name", // You can change this
         to_email: "ajin@adhiconstruction.us",
       };
@@ -105,6 +122,7 @@ const ContactUsComp = () => {
         ...formData,
         email: "",
         phone: "",
+        message: "",
         loading: false,
       });
 
@@ -129,9 +147,7 @@ const ContactUsComp = () => {
 
       // Show error toast
       setToastVariant("danger");
-      setToastMessage(
-        "Failed to send! Please try again later."
-      );
+      setToastMessage("Failed to send! Please try again later.");
       setShowToast(true);
     }
   };
@@ -186,6 +202,23 @@ const ContactUsComp = () => {
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.phone}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="w-100 mb-2">
+                  <Form.Control
+                    as="textarea"
+                    id="message"
+                    placeholder="Tell us how we can help..."
+                    rows={2}
+                    value={formData.message}
+                    onChange={handleChange}
+                    minLength={3}
+                    maxLength={100}
+                    isInvalid={!!errors.message}
+                    disabled={formData.loading}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.message}
                   </Form.Control.Feedback>
                 </Form.Group>
 
