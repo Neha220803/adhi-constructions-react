@@ -1,5 +1,5 @@
 footer {
-    height: 75vh;
+    height: 80vh;
     background-color: #222;
     overflow: hidden;
 }
@@ -30,8 +30,8 @@ footer {
 
 .logo {
     /* height: 80px; */
-    font-size: 35px !important;
-    width: 75% !important;
+    font-size: 31px !important;
+    width: 80% !important;
     text-align: start !important;
 }
 

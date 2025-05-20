@@ -9,7 +9,7 @@ const ContactUsComp = () => {
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
-    message: "", // Added message field
+    message: "",
     loading: false,
   });
   const [showToast, setShowToast] = useState(false);
@@ -134,9 +134,7 @@ const ContactUsComp = () => {
 
       // Show success toast
       setToastVariant("success");
-      setToastMessage(
-        "SUCCESS! Thank you for contacting us. We'll reach out soon."
-      );
+      setToastMessage("Thank you for contacting us. We'll reach out soon.");
       setShowToast(true);
     } catch (error) {
       console.error("Error sending email:", error);
@@ -155,7 +153,7 @@ const ContactUsComp = () => {
   const handleCloseToast = () => setShowToast(false);
 
   return (
-    <section className="contact-us-bg" id="contact">
+    <section className="contact-us-bg py-2" id="contact">
       <Container>
         <Row>
           <Col md={6} className="text-white">
